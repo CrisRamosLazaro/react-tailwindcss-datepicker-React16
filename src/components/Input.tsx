@@ -47,7 +47,12 @@ const Input: React.FC<Props> = (e: Props) => {
     const getClassName = useCallback(() => {
         const input = inputRef.current;
 
-        if (input && typeof classNames !== "undefined" && typeof classNames?.input === "function") {
+        if (
+            input &&
+            typeof classNames !== "undefined" &&
+            classNames.input &&
+            typeof classNames.input === "function"
+        ) {
             return classNames.input(input);
         }
 
@@ -147,7 +152,8 @@ const Input: React.FC<Props> = (e: Props) => {
         if (
             button &&
             typeof classNames !== "undefined" &&
-            typeof classNames?.toggleButton === "function"
+            classNames.toggleButton &&
+            typeof classNames.toggleButton === "function"
         ) {
             return classNames.toggleButton(button);
         }
@@ -170,7 +176,7 @@ const Input: React.FC<Props> = (e: Props) => {
     }, [e, inputRef]);
 
     useEffect(() => {
-        const button = buttonRef?.current;
+        const button = buttonRef ? buttonRef.current : undefined;
 
         function focusInput(e: Event) {
             e.stopPropagation();
@@ -217,9 +223,9 @@ const Input: React.FC<Props> = (e: Props) => {
     ]);
 
     useEffect(() => {
-        const div = calendarContainer?.current;
+        const div = calendarContainer ? calendarContainer.current : undefined;
         const input = inputRef.current;
-        const arrow = arrowContainer?.current;
+        const arrow = arrowContainer ? arrowContainer.current : undefined;
 
         function showCalendarContainer() {
             if (arrow && div && div.classList.contains("hidden")) {
@@ -293,7 +299,9 @@ const Input: React.FC<Props> = (e: Props) => {
                 disabled={disabled}
                 className={getToggleClassName()}
             >
-                {renderToggleIcon(inputText == null || !inputText?.length)}
+                {renderToggleIcon(
+                    inputText === null || inputText === undefined || inputText.length === 0
+                )}
             </button>
         </>
     );

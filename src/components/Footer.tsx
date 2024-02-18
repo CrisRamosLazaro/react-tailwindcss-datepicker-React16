@@ -13,7 +13,11 @@ const Footer: React.FC = () => {
 
     // Functions
     const getClassName = useCallback(() => {
-        if (typeof classNames !== "undefined" && typeof classNames?.footer === "function") {
+        if (
+            typeof classNames !== "undefined" &&
+            classNames.footer &&
+            typeof classNames.footer === "function"
+        ) {
             return classNames.footer();
         }
 
@@ -28,7 +32,11 @@ const Footer: React.FC = () => {
                         hideDatepicker();
                     }}
                 >
-                    <>{configs?.footer?.cancel ? configs.footer.cancel : "Cancel"}</>
+                    <>
+                        {configs && configs.footer && configs.footer.cancel
+                            ? configs.footer.cancel
+                            : "Cancel"}
+                    </>
                 </SecondaryButton>
                 <PrimaryButton
                     onClick={() => {
@@ -42,7 +50,11 @@ const Footer: React.FC = () => {
                     }}
                     disabled={!(period.start && period.end)}
                 >
-                    <>{configs?.footer?.apply ? configs.footer.apply : "Apply"}</>
+                    <>
+                        {configs && configs.footer && configs.footer.apply
+                            ? configs.footer.apply
+                            : "Apply"}
+                    </>
                 </PrimaryButton>
             </div>
         </div>

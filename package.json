@@ -1,5 +1,5 @@
 {
-    "name": "react-tailwindcss-datepicker",
+    "name": "react-tailwindcss-datepicker-react16",
     "version": "1.6.6",
     "description": "A modern React Datepicker using Tailwind CSS 3",
     "main": "dist/index.cjs.js",
@@ -12,8 +12,8 @@
         "clean": "rm -rf dist",
         "lint": "eslint --ignore-path .gitignore .",
         "lint:fix": "eslint --ignore-path .gitignore --fix .",
-        "pret": "prettier -c .",
-        "pret:fix": "prettier --ignore-path .gitignore --config ./.prettierrc --write './**/*.{js,jsx,ts,tsx,css,md,json}'",
+        "pret": "prettier -c ./**/*.{js,jsx,ts,tsx,css,md,json}",
+        "pret:fix": "prettier --ignore-path .gitignore --config ./.prettierrc --write ./**/*.{js,jsx,ts,tsx,css,md,json}",
         "code-style": "npm run pret && npm run lint",
         "code-style:fix": "npm run pret:fix && npm run pret:fix",
         "build": "npm run code-style && npm run clean && rollup -c",
@@ -23,9 +23,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/onesine/react-tailwindcss-datepicker"
+        "url": "https://github.com/CrisRamosLazaro/react-tailwindcss-datepicker-React16"
     },
     "keywords": [
+        "react-tailwindcss-datepicker-react16",
         "react-tailwindcss-datepicker",
         "react-datepicker",
         "tailwind-datepicker",
@@ -42,6 +43,7 @@
         "react": "^17.0.2 || ^18.2.0"
     },
     "devDependencies": {
+        "@babel/plugin-proposal-optional-chaining": "^7.21.0",
         "@rollup/plugin-commonjs": "^24.0.1",
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@rollup/plugin-typescript": "^11.0.0",

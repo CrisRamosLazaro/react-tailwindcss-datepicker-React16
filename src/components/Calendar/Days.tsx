@@ -184,20 +184,23 @@ const Days: React.FC<Props> = ({
             }
 
             let matchingCount = 0;
-            disabledDates?.forEach(dateRange => {
-                if (
-                    dayjs(formattedDate).isAfter(dateRange.startDate) &&
-                    dayjs(formattedDate).isBefore(dateRange.endDate)
-                ) {
-                    matchingCount++;
-                }
-                if (
-                    dayjs(formattedDate).isSame(dateRange.startDate) ||
-                    dayjs(formattedDate).isSame(dateRange.endDate)
-                ) {
-                    matchingCount++;
-                }
-            });
+            if (disabledDates) {
+                disabledDates.forEach(dateRange => {
+                    if (
+                        dayjs(formattedDate).isAfter(dateRange.startDate) &&
+                        dayjs(formattedDate).isBefore(dateRange.endDate)
+                    ) {
+                        matchingCount++;
+                    }
+                    if (
+                        dayjs(formattedDate).isSame(dateRange.startDate) ||
+                        dayjs(formattedDate).isSame(dateRange.endDate)
+                    ) {
+                        matchingCount++;
+                    }
+                });
+            }
+
             return matchingCount > 0;
         },
         [calendarData.date, isDateTooEarly, isDateTooLate, disabledDates]
@@ -297,6 +300,8 @@ const Days: React.FC<Props> = ({
         ]
     );
 
+    const disabledDatesLength = disabledDates ? disabledDates.length : undefined;
+
     const handleClickDay = useCallback(
         (day: number, type: "previous" | "current" | "next") => {
             function continueClick() {
@@ -313,7 +318,7 @@ const Days: React.FC<Props> = ({
                 }
             }
 
-            if (disabledDates?.length) {
+            if (disabledDates && disabledDates.length) {
                 const object = getMetaData();
                 const newDate = object[type as keyof typeof object];
                 const clickDay = `${newDate.year()}-${newDate.month() + 1}-${
@@ -333,7 +338,7 @@ const Days: React.FC<Props> = ({
         },
         [
             dayHover,
-            disabledDates?.length,
+            disabledDatesLength,
             getMetaData,
             onClickDay,
             onClickNextDays,

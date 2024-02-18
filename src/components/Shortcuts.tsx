@@ -63,7 +63,7 @@ const ItemTemplate = React.memo((props: ItemTemplateProps) => {
         ]
     );
 
-    const children = props?.children;
+    const children = props ? props.children : undefined;
 
     return (
         <li
@@ -71,7 +71,7 @@ const ItemTemplate = React.memo((props: ItemTemplateProps) => {
             onClick={() => {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
-                chosePeriod(props?.item.period);
+                chosePeriod(props ? props.item.period : undefined);
             }}
         >
             {children}
@@ -88,7 +88,7 @@ const Shortcuts: React.FC = () => {
     }, []);
 
     const shortcutOptions = useMemo<[string, ShortcutsItem | ShortcutsItem[]][]>(() => {
-        if (!configs?.shortcuts) {
+        if (!configs || !configs.shortcuts) {
             return Object.entries(DEFAULT_SHORTCUTS);
         }
 
@@ -128,10 +128,10 @@ const Shortcuts: React.FC = () => {
     }, [configs]);
 
     const printItemText = useCallback((item: ShortcutsItem) => {
-        return item?.text ?? null;
+        return item && item.text !== undefined ? item.text : null;
     }, []);
 
-    return shortcutOptions?.length ? (
+    return shortcutOptions && shortcutOptions.length ? (
         <div className="md:border-b mb-3 lg:mb-0 lg:border-r lg:border-b-0 border-gray-300 dark:border-gray-700 pr-1">
             <ul className="w-full tracking-wide flex flex-wrap lg:flex-col pb-1 lg:pb-0">
                 {shortcutOptions.map(([key, item], index: number) =>
@@ -140,7 +140,8 @@ const Shortcuts: React.FC = () => {
                             <ItemTemplate key={index} item={item}>
                                 <>
                                     {key === "past" &&
-                                    configs?.shortcuts &&
+                                    configs &&
+                                    configs.shortcuts &&
                                     key in configs.shortcuts &&
                                     item.daysNumber
                                         ? callPastFunction(
@@ -154,7 +155,7 @@ const Shortcuts: React.FC = () => {
                     ) : (
                         <ItemTemplate key={index} item={item}>
                             <>
-                                {configs?.shortcuts && key in configs.shortcuts
+                                {configs && configs.shortcuts && key in configs.shortcuts
                                     ? typeof configs.shortcuts[
                                           key as keyof typeof configs.shortcuts
                                       ] === "object"

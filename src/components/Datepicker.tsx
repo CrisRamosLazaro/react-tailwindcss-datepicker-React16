@@ -215,8 +215,8 @@ const Datepicker: React.FC<DatepickerType> = ({
 
     useEffect(() => {
         if (startFrom && dayjs(startFrom).isValid()) {
-            const startDate = value?.startDate;
-            const endDate = value?.endDate;
+            const startDate = value ? value.startDate : undefined;
+            const endDate = value ? value.endDate : undefined;
             if (startDate && dayjs(startDate).isValid()) {
                 setFirstDate(dayjs(startDate));
                 if (!asSingle) {
